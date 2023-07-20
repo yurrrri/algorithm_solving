@@ -1,21 +1,24 @@
 func solution(_ strings:[String], _ n:Int) -> [String] {
     
-    if strings.count == 1 {
-        return strings
-    }
+//     if strings.count == 1 {
+//         return strings
+//     }
     
-    var sorted:[String] = []
-    sorted = strings.sorted(by: { 
-        if $0[n] < $1[n] {  // 인덱스 1의 문자가 더 앞서면 더 앞
-            return true
-        } else if $0[n] == $1[n] {
-            return $0 < $1
-        } else {
-            return false
-        }
-    })
+//     var sorted:[String] = []
+//     sorted = strings.sorted(by: { 
+//         if $0[n] < $1[n] {  // 인덱스 1의 문자가 더 앞서면 더 앞
+//             return true
+//         } else if $0[n] == $1[n] {
+//             return $0 < $1
+//         } else {
+//             return false
+//         }
+//     })
     
-    return sorted
+//     return sorted
+    
+    return strings.sorted{  $0[n] == $1[n] ? $0 < $1 :  $0[n] < $1[n] }
+
 }
 
 extension String {
