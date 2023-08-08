@@ -1,35 +1,39 @@
-from collections import defaultdict 
+#1. 시간 오래걸리는 풀이
+# def solution(tickets):
+#     answer = []
+#     visited = [False] * len(tickets)
 
-def dfs(graph, N, key, footprint):
-    print(footprint)
+#     def dfs(arr, airport):
+#         if False not in visited: #모두 방문했다면 (모든 경로를 들렀다면)
+#             answer.append(arr)
+#             return
+#         for i in range(len(tickets)):
+#             if not visited[i]:
+#                 if tickets[i][0] == airport:
+#                     visited[i] = True
+#                     dfs(arr + [tickets[i][1]], tickets[i][1])
+#                     visited[i] = False
 
-    if len(footprint) == N + 1:
-        return footprint
+#     dfs(["ICN"], "ICN")
+#     answer.sort()
 
-    for idx, country in enumerate(graph[key]):
-        graph[key].pop(idx)
+#     return answer[0]
 
-        tmp = footprint[:]
-        tmp.append(country)
+from collections import defaultdict
 
-        ret = dfs(graph, N, country, tmp)
-
-        graph[key].insert(idx, country)
-
-        if ret:
-            return ret
-
+def dfs(graph, path, visit):
+    if path:
+        to = path[-1]
+        if graph[to]: path.append(graph[to].pop(0))
+        else: visit.append(path.pop())
+        dfs(graph, path, visit)
+    
+    return visit[::-1]
 
 def solution(tickets):
-    answer = []
-
     graph = defaultdict(list)
-
-    N = len(tickets)
-    for ticket in tickets:
-        graph[ticket[0]].append(ticket[1])
-        graph[ticket[0]].sort()
-
-    answer = dfs(graph, N, "ICN", ["ICN"])
-
-    return answer
+    
+    for a, b in tickets: graph[a].append(b)
+    for key in graph.keys(): graph[key].sort()
+    
+    return dfs(graph, ["ICN"], [])
