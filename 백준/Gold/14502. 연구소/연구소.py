@@ -1,70 +1,58 @@
 import sys
+import copy
+from collections import deque
 from itertools import combinations
 
-n, m = map(int, sys.stdin.readline().rstrip().split()) #세로 크기 n, 가로크기 m
+input = sys.stdin.readline
+n, m = map(int, input().rstrip().split())
 board = []
-temp = [[0]*m for _ in range(n)]
-array = []
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+answer = 0 #안전영역의 최대값
+zeroArr = []
+q = deque()
 
 for _ in range(n):
-  board.append(list(map(int, sys.stdin.readline().rstrip().split())))
+  board.append(list(map(int, input().rstrip().split())))
 
 for i in range(n):
   for j in range(m):
-    if board[i][j] == 0:
-      array.append([i, j])
+    if board[i][j] == 2:  #바이러스 있는 위치 큐에 삽입
+      q.append((i, j))
+    elif board[i][j] == 0:
+      zeroArr.append((i, j))
 
-combi = list(combinations(array, 3)) #벽을 3개 세울 수 있는 모든 경우의수 리스트
-
-max_safe = 0 #최대값
-
-dx = [0, 0, 1, -1] #차례대로 동, 서, 남, 북
-dy = [1, -1, 0, 0]
-
-def virus(x, y): #바이러스 확산 함수
-  for i in range(4):
-    nx = x+dx[i]
-    ny = y+dy[i]
-
-    if nx>=0 and nx<n and ny>=0 and ny<m:
-      if temp[nx][ny] == 0:
-        temp[nx][ny] = 2
-        virus(nx, ny)
-
-def countSafe(board): #안전영역 세고, 최대값 도출하는 함수
-  global max_safe
+def countSafeArea(board): # 안전구역 개수세기
   count = 0
   
   for i in range(n):
     for j in range(m):
       if board[i][j] == 0:
         count += 1
-  max_safe = max(max_safe, count)
+
+  return count
+
+def bfs(q, board):
+  while q:
+    x, y = q.popleft()
     
-def bfs(): #BFS
-  for i in range(n):
-    for j in range(m):
-      temp[i][j] = board[i][j] # 복사
+    for i in range(4):
+      nx = x + dx[i]
+      ny = y + dy[i]
+  
+      if 0<=nx<n and 0<=ny<m and not board[nx][ny]:  # 0이면
+        board[nx][ny] = 2 #바이러스 감염 후 큐에 삽입
+        q.append((nx, ny))
 
-  for i in range(n):
-    for j in range(m):
-      if temp[i][j] == 2:
-        virus(i, j)
-
-  countSafe(temp)
-
-
-a = 0
-
-for k in combi:
-  for x, y in k:
+combi = combinations(zeroArr, 3)
+for i in combi:
+  for x, y in i:
     board[x][y] = 1
-    
-    a += 1
-    if a == 3:
-      bfs()
-      a = 0
-      for x, y in k:
-        board[x][y] = 0    
-                                              
-print(max_safe)
+  copiedBoard = copy.deepcopy(board)
+  copiedQ = q.copy()
+  bfs(copiedQ, copiedBoard)
+  answer = max(countSafeArea(copiedBoard), answer)
+
+  for x, y in i:
+    board[x][y] = 0
+print(answer)
