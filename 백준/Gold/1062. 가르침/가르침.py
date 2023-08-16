@@ -3,10 +3,11 @@ import sys
 input = sys.stdin.readline
 n, k = map(int, input().rstrip().split())
 
-if k < 5:
+#남극 언어의 모든 단어는 anta, tica로 끝남. 즉 최소 a, n, t, i, c 5개는 배워야만 1개 이상의 단어를 배울 수 있음
+if k < 5:   # 5개 미만으로 배우면 1개의 단어도 읽을 수 없음
   print(0)
   exit(0)
-elif k == 26:
+elif k == 26:  # 26개의 단어를 배울 수 있으면 모든 단어를 알 수 있음
   print(n)
   exit(0)
 
@@ -26,7 +27,7 @@ def countComposedOfStr():
   for word in arr:
     count += 1
     for w in word:
-      if not visited[ord(w) - ord('a')]:
+      if not visited[ord(w) - ord('a')]: #배우지 않은 단어가 있다면 못읽음 --> break
         count -=1
         break
         
@@ -35,14 +36,14 @@ def countComposedOfStr():
 def dfs(idx, count):
   global answer
 
-  if count == k-5:
+  if count == k-5:  # a, n, t, i, c을 제외한 알파벳 중 다른 단어를 더 배웠다면
     answer = max(answer, countComposedOfStr())
     return
 
   for i in range(idx, 26):
     if not visited[i]:
       visited[i] = True
-      dfs(i, count+1)
+      dfs(i+1, count+1)
       visited[i] = False
 
 dfs(0, 0)
