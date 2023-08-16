@@ -5,14 +5,14 @@ n, s = map(int, input().rstrip().split())
 board = list(map(int, input().rstrip().split()))
 answer = 0
 
-def dfs(depth, idx, sum):
+def dfs(idx, sum):
   global answer
   
-  if depth > 0 and sum == s:
+  if idx > 0 and sum == s:
     answer += 1
 
   for i in range(idx, n):
-    dfs(depth+1, i+1, sum + board[i])
+    dfs(i+1, sum + board[i])
 
-dfs(0, 0, 0)
+dfs(0, 0)
 print(answer)
