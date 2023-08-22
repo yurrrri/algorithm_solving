@@ -14,8 +14,8 @@ for _ in range(n):
 
 answer = 0
 def bfs(start, n):
-  visited = [-1] * n
-  visited[start] = 0
+  visited = [0] * n
+  visited[start] = 1
   q = deque([start])
   maxValue = (0, 0) # 정점, 거리
 
@@ -23,7 +23,7 @@ def bfs(start, n):
     node = q.popleft()
 
     for n, d in graph[node]:
-      if visited[n] == -1:
+      if not visited[n]:
         visited[n] = visited[node] + d
         q.append(n)
         if visited[n] > maxValue[1]:
@@ -34,4 +34,4 @@ def bfs(start, n):
 node, dist = bfs(1, n+1)
 node, dist = bfs(node, n+1)
 
-print(dist)
+print(dist-1)
