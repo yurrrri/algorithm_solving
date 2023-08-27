@@ -4,19 +4,12 @@ input = sys.stdin.readline
 
 dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
-
-# 해당 열쇠로 열 수 있는 문 표시
-def init_doors():
-    for key in keys:
-        if key == '0':
-            break
-        doors[ord(key) - ord('a')] = True
         
 # 열 수 있는 문을 빈 공간으로 변경
 def init_building():
     for i in range(1, h+1):
         for j in range(1, w+1):
-            if building[i][j].isupper() and doors[ord(building[i][j].lower())-ord('a')]:
+            if building[i][j].isupper() and building[i][j].lower() in keys:
                 building[i][j] = '.'
                 
 def bfs():
@@ -47,13 +40,13 @@ def bfs():
                     else:
                         # 다음 포지션에 문이 있으면 열 수 있으면 빈 공간으로 만들고 큐에 삽입
                         if building[nx][ny].isupper():
-                            if doors[ord(building[nx][ny].lower())-ord('a')]:
+                            if building[nx][ny].lower() in keys:
                                 building[nx][ny] = '.'
                                 visited[nx][ny] = True
                                 q.append((nx, ny))
                         # 다음 포지션에 열쇠가 있으면 히스토리 초기화
                         elif building[nx][ny].islower():
-                            doors[ord(building[nx][ny].lower())-ord('a')] = True
+                            keys.append(building[nx][ny])
                             building[nx][ny] = '.'
                             visited = [[False] * w for _ in range(h)]
                             q = deque()
@@ -72,7 +65,6 @@ for _ in range(t):
     
     keys = list(input().rstrip())
     doors = [False] * 26
-    init_doors()   # 열쇠로 열 수 있는 문을 배열 형태로 가지고 있다가 그 문들을 빈 공간으로 표시 후에 탐색 시작함
     init_building()
     
     h, w = h+2, w+2  # 외곽 추가때문에 양옆에 1씩 추가되었으므로 탐색 범위가 h+2, w+2로 변경됨
