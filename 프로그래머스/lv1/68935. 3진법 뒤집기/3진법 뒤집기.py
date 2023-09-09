@@ -1,16 +1,12 @@
-def radixChange(n, radix):
-    arr = []
-    while n:
-        n, remain = divmod(n, radix)
-        arr.append(str(remain))
+def radixChange(num, radix):
+    nums = []
+    while num > 0:
+        mok, remain = divmod(num, radix)
+        nums.append(remain)
+        num = mok
         
-    return ''.join(arr[::-1])
+    return ''.join(list(map(str, nums)))
 
 def solution(n):
-    answer = 0
-    arr = radixChange(n, 3)
-    
-    print(arr)
-    
-    return int(arr[::-1], 3)
-    # return 0
+    answer = radixChange(n, 3)
+    return int(answer, 3)
