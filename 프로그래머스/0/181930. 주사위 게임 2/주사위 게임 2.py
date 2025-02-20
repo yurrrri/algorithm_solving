@@ -1,3 +1,4 @@
+# 여기서 중복되는 코드는 하나의 변수로 만들면 좋을듯
 def solution(a, b, c):
     if len(set([a, b, c])) == 3:
         return a+b+c
