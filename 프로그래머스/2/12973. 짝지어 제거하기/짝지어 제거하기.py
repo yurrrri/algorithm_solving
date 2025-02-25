@@ -9,4 +9,4 @@ def solution(s):
             else:
                 stack.append(c)
 
-    return int(len(stack) == 0)
+    return int(len(stack) == 0)   #int(not stack)으로 대체 가능
