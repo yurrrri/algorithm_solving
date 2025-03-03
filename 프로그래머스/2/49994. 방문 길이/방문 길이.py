@@ -4,16 +4,10 @@ def is_valid_move(x, y):    # 위치를 벗어나지 않는지 확인
 def solution(dirs):
     answer = set()
     x, y = 0, 0  # 시작위치 지정
+    direction = {"U": (0, 1), "D": (0, -1), "R": (1, 0), "L": (-1, 0)}
     
     for dir in dirs:
-        if dir == "U":
-            nx, ny = x, y + 1
-        elif dir == "D":
-            nx, ny = x, y - 1
-        elif dir == "R":
-            nx, ny = x + 1, y
-        else:
-            nx, ny = x - 1, y
+        nx , ny = x + direction[dir][0], y + direction[dir][1]
             
         if not is_valid_move(nx, ny):
             continue
