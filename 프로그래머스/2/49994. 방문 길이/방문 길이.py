@@ -1,25 +1,26 @@
+def is_valid_move(x, y):    # 위치를 벗어나지 않는지 확인
+    return -5 <= x <= 5 and -5 <= y <= 5
+
 def solution(dirs):
     answer = set()
-    dirs = list(dirs)
-    x, y = 0, 0
+    x, y = 0, 0  # 시작위치 지정
     
     for dir in dirs:
-        cur_x, cur_y = x, y
         if dir == "U":
-            y += 1
-        elif dir == "L":
-            x -= 1
+            nx, ny = x, y + 1
+        elif dir == "D":
+            nx, ny = x, y - 1
         elif dir == "R":
-            x += 1
+            nx, ny = x + 1, y
         else:
-            y -= 1
+            nx, ny = x - 1, y
             
-        if not (-5<=x<=5 and -5<=y<=5):
-            x, y = cur_x, cur_y
-        else:
-            answer.add((cur_x, cur_y, x, y))
-            answer.add((x, y, cur_x, cur_y))
+        if not is_valid_move(nx, ny):
+            continue
             
-    # print(answer)
-            
+        answer.add((x, y, nx, ny))
+        answer.add((nx, ny, x, y))
+        
+        x, y = nx, ny
+        
     return len(answer)/2
