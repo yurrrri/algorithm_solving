@@ -12,3 +12,10 @@ def solution(participant, completion):
     for key, value in dic.items():
         if value != 0:
             return key
+
+# import collections
+
+# def solution(participant, completion):
+#     answer = collections.Counter(participant) - collections.Counter(completion)  # value가 0인 key-value쌍 제거되어 반환
+#     print(list(answer.values()))
+#     return list(answer.keys())[0]
