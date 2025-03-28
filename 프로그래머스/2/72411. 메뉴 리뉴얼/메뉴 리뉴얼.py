@@ -17,7 +17,7 @@ def solution(orders, course):
         max_num = 0
         for k, v in counter.items():
             if len(k) == c and v >= 2:
-                max_num = max(v, max_num)
+                max_num = max(max_num, v)
                 
         for k, v in counter.items():
             if len(k) == c and v == max_num:
