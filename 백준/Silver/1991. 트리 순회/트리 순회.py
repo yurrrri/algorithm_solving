@@ -1,39 +1,38 @@
+import sys
+
+input = sys.stdin.readline
+sys.setrecursionlimit(10**8)  # 재귀함수 리미트하여 메모리 초과 방지
+
 n = int(input())
-nodes = {}
+# 딕셔너리로 트리 구현
+tree = {}
+for i in range(n):
+    root, left, right = map(str, input().split())  # 루트, 왼쪽자식, 오른쪽 자식
+    tree[root] = (left, right)  # {'A': ('B', 'C')}
 
-class node:
-  def __init__(self, data, left, right):
-    self.data = data
-    self.left = left
-    self.right = right
+def preorder(v):  # 전위순회
+    if v != ".":
+        print(v, end="")
+        preorder(tree[v][0])
+        preorder(tree[v][1])
 
-def preorder(node):
-  print(node.data, end='')
-  if node.left != ".":
-    preorder(nodes[node.left])
-  if node.right != ".":
-    preorder(nodes[node.right])
 
-def inorder(node):
-  if node.left != ".":
-    inorder(nodes[node.left])
-  print(node.data, end='')
-  if node.right != ".":
-    inorder(nodes[node.right])
+def inorder(v):  # 중위순회
+    if v != ".":  # .이 아니면
+        inorder(tree[v][0])
+        print(v, end="")
+        inorder(tree[v][1])
 
-def postorder(node):
-  if node.left != ".":
-    postorder(nodes[node.left])
-  if node.right != ".":
-    postorder(nodes[node.right])
-  print(node.data, end='')
 
-for _ in range(n):
-  data, left, right = input().split()
-  nodes[data] = node(data=data, left=left, right=right)
+def postorder(v):  # 후위순회
+    if v != ".":  # .이 아니면
+        postorder(tree[v][0])
+        postorder(tree[v][1])
+        print(v, end="")
 
-preorder(nodes['A'])
-print()
-inorder(nodes['A'])
-print()
-postorder(nodes['A'])
+#루트노드 'A'
+preorder('A')
+print("")
+inorder('A')
+print("")
+postorder('A')
