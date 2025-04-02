@@ -1,7 +1,7 @@
 def solution(wallpaper):
     board_x_length = len(wallpaper)
     board_y_length = len(wallpaper[0])
-    answer = [51, 51, 0, 0]
+    answer = [1e9, 1e9, 0, 0]
     
     for x in range(board_x_length):
         for y in range(board_y_length):
