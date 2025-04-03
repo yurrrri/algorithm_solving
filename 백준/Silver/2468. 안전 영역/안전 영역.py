@@ -13,16 +13,17 @@ maxHeight = 0
 
 for i in range(n):
   arr = list(map(int, input().split()))
-  maxHeight = max(max(arr), maxHeight)
+  maxHeight = max(max(arr), maxHeight)  # 높이의 최대값을 구해 0부터 최대값까지 각 경우의 물에 잠기지 않는 지역 개수를 구하기 위함
   graph.append(arr)
 
 def dfs(x, y, height):
+  visited[x][y] = True
+  
   for i in range(4):
     nx = x + dx[i]
     ny = y + dy[i]
 
     if 0<=nx<n and 0<=ny<n and not visited[nx][ny] and graph[nx][ny] > height:
-      visited[nx][ny] = True
       dfs(nx, ny, height)
 
 answer = 0
@@ -35,7 +36,6 @@ for i in range(0, maxHeight+1):
     for k in range(n):
       if graph[j][k] > i and not visited[j][k]:
         count += 1
-        visited[j][k] = True
         dfs(j, k, i)
   answer = max(answer, count)
 
