@@ -1,40 +1,41 @@
 import sys
 from collections import deque
 
-n, m, v = map(int, sys.stdin.readline().rstrip().split())
+input = sys.stdin.readline
+n, m, v = map(int, input().split())  # 정점의 갯수, 간선의 갯수, 시작지점
 graph = [[] for _ in range(n+1)]
-
-for _ in range(m):
-  x, y = map(int, sys.stdin.readline().rstrip().split())
-  graph[x].append(y)
-  graph[y].append(x)
-
 visited = [False] * (n+1)
+
+for i in range(m):
+  start, end = map(int, input().split())
+  graph[start].append(end)
+  graph[end].append(start)
+
+for i in range(n+1):
+  graph[i].sort()
 
 def dfs(v):
   visited[v] = True
   print(v, end=' ')
 
-  graph[v].sort() 
-  for i in graph[v]:
-    if not visited[i]:
-      dfs(i)
+  for c in graph[v]:
+    if not visited[c]:
+      dfs(c)
 
 def bfs(v):
-  q = deque([v])           
+  q = deque([v])
   visited[v] = True
-  
+
   while q:
-    a = q.popleft()
-    print(a, end=' ')
-    graph[a].sort()
-    
-    for i in graph[a]:
-      if not visited[i]:
-        q.append(i)
-        visited[i] = True
-        
+    v = q.popleft()
+    print(v, end=' ')
+
+    for c in graph[v]:
+      if not visited[c]:
+        q.append(c)
+        visited[c] = True
+
 dfs(v)
 print()
-visited = [False] * (n+1) # 초기화
+visited = [False] * (n+1)
 bfs(v)
