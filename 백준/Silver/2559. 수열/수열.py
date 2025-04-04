@@ -6,9 +6,9 @@ arr = list(map(int, input().split()))
 sliding_window = sum(arr[:k])
 answer = sliding_window
 
-for i in range(1, n-k+1):
-  sliding_window -= arr[i-1]
-  sliding_window += arr[i+k-1]
+for i in range(n-k):
+  sliding_window -= arr[i]
+  sliding_window += arr[i+k]
   answer = max(answer, sliding_window)
 
 print(answer)
