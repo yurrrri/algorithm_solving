@@ -21,7 +21,7 @@ def solution(maps):
                 nx = now_x + dx[i]
                 ny = now_y + dy[i]
 
-                if 0<=nx<n and 0<=ny<m and maps[nx][ny] and distance[nx][ny] == -1:
+                if 0<=nx<n and 0<=ny<m and maps[nx][ny] != 0 and distance[nx][ny] == -1:
                     q.append((nx, ny))
                     distance[nx][ny] = distance[now_x][now_y] + 1
                     
