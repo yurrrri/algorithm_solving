@@ -3,40 +3,38 @@ import heapq
 
 input = sys.stdin.readline
 INF = int(1e9)
+v, e = map(int, input().split())  # 정점의 갯수 v, 간선의 갯수 e
+start = int(input())
 
-v, e = map(int, input().rstrip().split())
-start = int(input().rstrip())
+graph = [[] for _ in range(v+1)]
+distance = [INF] * (v+1)   # 시작노드부터 특정 노드까지의 최소비용 저장 테이블 --> 초기에는 모두 INF로 초기화함
 
-graph = [[] for _ in range(v+1)]  # []의 개수가 v+1개
-distance = [INF] * (v+1)  # 원소의 개수가 v+1개
-
-#1. 간선 정보 입력받기
 for _ in range(e):
-	u, v, w = map(int, input().rstrip().split())
-	graph[u].append((v, w)) # u에서 v로 가는 비용이 w
+  u, v, w = map(int, input().split())
+  graph[u].append((v, w))   #u에서 v로 가는 가중치 w인 간선
 
 def dijkstra(start):
-	q = []
-	heapq.heappush(q, (0, start)) # 시작점은 비용 0으로 해서 큐에 삽입
-	distance[start] = 0
-	
-	while q:
-		dist, now = heapq.heappop(q) # 차례대로 거리, 정점
+  q = []
+  distance[start] =  0
+  heapq.heappush(q, (0, start))
 
-		if distance[now] < dist:
-			continue
+  while q:
+    dist, now = heapq.heappop(q)
 
-		for i in graph[now]:  # 정점, 거리
-			cost = dist + i[1]
+    if distance[now] < dist:
+      continue
 
-			if cost < distance[i[0]]:
-				distance[i[0]] = cost
-				heapq.heappush(q, (cost, i[0]))
+    for i in graph[now]:
+      cost = dist + i[1]
+
+      if cost < distance[i[0]]:
+          distance[i[0]] = cost
+          heapq.heappush(q, (cost, i[0]))
 
 dijkstra(start)
 
 for i in range(1, len(distance)):
-	if distance[i] == INF:
-		print("INF")
-	else:
-		print(distance[i])
+  if distance[i] == INF:
+    print("INF")
+  else:
+    print(distance[i])
