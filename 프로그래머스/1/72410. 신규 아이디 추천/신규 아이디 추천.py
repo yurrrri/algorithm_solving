@@ -13,7 +13,7 @@ def solution(new_id):
     # 4단계
     answer = answer.strip(".")
     # 5단계
-    if len(answer) == 0:
+    if len(answer) == 0: # == not answer로 치환 가능
         answer = "a"
     # 6단계
     if len(answer) >= 16:
