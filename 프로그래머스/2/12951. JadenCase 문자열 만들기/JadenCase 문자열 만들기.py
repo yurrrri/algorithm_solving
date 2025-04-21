@@ -5,5 +5,5 @@ def solution(s):
         if c:
             answer.append(c.lower().capitalize())
         else:
-            answer.append("")
+            answer.append('')   # 공백 문자의 갯수대로 리스트에 공백 문자 포함
     return " ".join(answer)
