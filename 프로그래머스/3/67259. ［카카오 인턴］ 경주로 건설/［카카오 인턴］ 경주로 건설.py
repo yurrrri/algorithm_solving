@@ -3,9 +3,9 @@ import heapq
 def solution(board):
     n = len(board)
     INF = int(1e9)
-    # 방향: 상(0), 좌(1), 하(2), 우(3)
-    dx = [0, -1, 0, 1]
-    dy = [-1, 0, 1, 0]
+    # 방향: 차례대로 상 좌 하 우
+    dx = [-1, 0, 1, 0]
+    dy = [0, -1, 0, 1]
     
     # 3차원 거리 배열: [x][y][dir]
     distance = [[[INF] * 4 for _ in range(n)] for _ in range(n)]
@@ -18,7 +18,7 @@ def solution(board):
     heapq.heappush(heap, (0, -1, 0, 0))  # 비용, 이전방향, x, y
 
     def calculate_cost(direction, prev_direction, cost):
-        if prev_direction == -1 or (direction == prev_direction):
+        if prev_direction == -1 or (prev_direction - direction) %2 == 0:
             return cost + 100
         else:
             return cost + 600
