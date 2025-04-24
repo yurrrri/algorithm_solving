@@ -1,6 +1,3 @@
-import sys
-sys.setrecursionlimit(10**8)
-
 n, k = map(int, input().split())
 INF = int(1e9)
 dp = [INF] * (n+1)
