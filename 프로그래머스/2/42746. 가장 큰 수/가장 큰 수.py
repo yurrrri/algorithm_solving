@@ -9,6 +9,5 @@ def compare(a, b):
 def solution(numbers):
     numbers = list(map(str, numbers))
     numbers = sorted(numbers, key = cmp_to_key(compare), reverse=True)
-    answer = "".join(numbers)
-    return "0" if int(answer) == 0 else answer
+    return str(int(''.join(numbers)))
     
