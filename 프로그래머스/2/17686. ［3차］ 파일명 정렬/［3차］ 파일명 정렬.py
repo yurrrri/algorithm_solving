@@ -2,41 +2,39 @@ from functools import cmp_to_key
 
 def compare(a, b):
     def split(file):
-        head_end_index = 0
-        number_end_index = len(file)
+        head = ''
+        number = ''
+        i = 0
+        length = len(file)
 
-        for i in range(len(file)):
-            if file[i].isdigit():
-                head_end_index = i
-                break
+        # HEAD 추출: 숫자 이전까지
+        while i < length and not file[i].isdigit():
+            head += file[i]
+            i += 1
 
-        for i in range(head_end_index, len(file)):
-            if not file[i].isdigit() or i - head_end_index >= 5:
-                number_end_index = i
-                break
+        # NUMBER 추출: 숫자가 끝날 때까지 (제한 없음)
+        while i < length and file[i].isdigit():
+            number += file[i]
+            i += 1
 
-        header = file[:head_end_index]
-        number = file[head_end_index:number_end_index]
-        return header, number
+        return head, number
 
-    a_header, a_number = split(a)
-    b_header, b_number = split(b)
-    
-    if a_header.lower() > b_header.lower():
-        axis = 1
-    elif a_header.lower() < b_header.lower():
-        axis = -1
+    a_head, a_num = split(a)
+    b_head, b_num = split(b)
+
+    # HEAD 비교 (대소문자 무시)
+    if a_head.lower() < b_head.lower():
+        return -1
+    elif a_head.lower() > b_head.lower():
+        return 1
     else:
-
-        if int(a_number) > int(b_number):
-            axis = 1
-        elif int(a_number) < int(b_number):
-            axis = -1
+        # NUMBER 비교 (숫자 비교)
+        if int(a_num) < int(b_num):
+            return -1
+        elif int(a_num) > int(b_num):
+            return 1
         else:
-            axis = 0
-        
-    return axis
-        
+            return 0  # 같으면 원래 순서 유지
 
 def solution(files):
     return sorted(files, key=cmp_to_key(compare))
