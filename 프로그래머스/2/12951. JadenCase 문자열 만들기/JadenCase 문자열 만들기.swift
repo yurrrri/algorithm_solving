@@ -1,13 +1,13 @@
 import Foundation
 
 func solution(_ s: String) -> String {
-    let arr = s.split(separator: " ", omittingEmptySubsequences: false).map { String($0) }
+    let arr = s.components(separatedBy:" ")
     var answer: [String] = []
 
     for word in arr {
         if let first = word.first {
             if first.isLetter {
-                answer.append(word.lowercased().capitalized)
+                answer.append(word.capitalized)
             } else {
                 answer.append(word.lowercased())
             }
