@@ -11,7 +11,7 @@ def solution(topping):
         young[t] -= 1
         
         if young[t] == 0:
-            del young[t]
+            young.pop(t)
             
         if len(old) == len(young):
             answer += 1
