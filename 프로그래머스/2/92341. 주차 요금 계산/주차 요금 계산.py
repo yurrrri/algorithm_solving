@@ -3,13 +3,12 @@ import math
 
 def solution(fees, records):
     # fees: 차례대로 기본 시간, 기본 요금, 단위 시간, 단위 요금
+    basic_time, basic_fee, unit_time, unit_fee = fees
     # answer: 차량번호가 작은 자동차부터 주차요금 차례대로 담아서 return
     record_dic = {}
     time_dic = defaultdict(int)
     
     def calculate_time(in_time, out_time):
-        hour = 0
-        minute = 0
         in_time = in_time.split(":")
         out_time = out_time.split(":")
         hour = int(out_time[0]) - int(in_time[0])
@@ -32,14 +31,13 @@ def solution(fees, records):
     for (number, in_time) in record_dic.items():   # 출차되지 않은 차들은 23:59 out으로 침
         time_dic[number] += calculate_time(in_time, "23:59")
         
-    list_time_dic = sorted(time_dic.items(), key=lambda x:x[0])
-    print(list_time_dic)
+    list_time_dic = sorted(time_dic.items(), key=lambda x:x[0])   # 차량 번호가 작은 순서부터 계산하기 위해 먼저 key 기준으로 정렬
     answer = []
     
     for _, time in list_time_dic:
-        if time <= fees[0]:
-            answer.append(fees[1])
+        if time <= basic_time:
+            answer.append(basic_fee)
         else:
-            fee = fees[1] + math.ceil((time - fees[0]) / fees[2]) * fees[3]
+            fee = basic_fee + math.ceil((time - basic_time) / unit_time) * unit_fee
             answer.append(fee)
     return answer
