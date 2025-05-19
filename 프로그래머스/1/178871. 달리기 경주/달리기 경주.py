@@ -12,10 +12,7 @@ def solution(players, callings):
         former_rank = call_rank - 1     # 앞 플레이어 순위
         
         # 순서 바꾸기
-        player_rank[call] = former_rank
-        rank_player[former_rank] = call
-        
-        player_rank[former] = call_rank
-        rank_player[call_rank] = former
+        player_rank[call], player_rank[former] = player_rank[former], player_rank[call]
+        rank_player[former_rank], rank_player[call_rank] = rank_player[call_rank], rank_player[former_rank]
     
     return sorted(player_rank.keys(), key=lambda x:player_rank[x])
