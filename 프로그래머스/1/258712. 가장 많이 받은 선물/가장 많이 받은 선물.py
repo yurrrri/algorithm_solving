@@ -17,7 +17,7 @@ def solution(friends, gifts):
         dic2[receiver][1] += 1
         
     for friend1 in friends:
-        for (friend2, v) in dic1[friend1].items():
+        for friend2 in dic1[friend1].keys():
             if dic1[friend1][friend2] > dic1[friend2][friend1]:
                 present_count[friend1] += 1
             elif dic1[friend1][friend2] == dic1[friend2][friend1]:
@@ -26,5 +26,7 @@ def solution(friends, gifts):
 
                 if friend1_present_num > friend2_present_num:
                     present_count[friend1] += 1
+                    
+    friends_gift_counter = list(present_count.values())
 
-    return max(list(present_count.values())) if list(present_count.values()) else 0
+    return max(friends_gift_counter) if friends_gift_counter else 0
