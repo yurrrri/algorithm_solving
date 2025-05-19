@@ -18,21 +18,13 @@ def solution(friends, gifts):
         
     for friend1 in friends:
         for (friend2, v) in dic1[friend1].items():
-            if dic1[friend1][friend2] != 0 or dic1[friend2][friend1] != 0:
-                if dic1[friend1][friend2] > dic1[friend2][friend1]:
+            if dic1[friend1][friend2] > dic1[friend2][friend1]:
+                present_count[friend1] += 1
+            elif dic1[friend1][friend2] == dic1[friend2][friend1]:
+                friend1_present_num = dic2[friend1][0] - dic2[friend1][1]
+                friend2_present_num = dic2[friend2][0] - dic2[friend2][1]
+
+                if friend1_present_num > friend2_present_num:
                     present_count[friend1] += 1
-                elif dic1[friend1][friend2] == dic1[friend2][friend1]:
-                    friend1_present_num = dic2[friend1][0] - dic2[friend1][1]
-                    friend2_present_num = dic2[friend2][0] - dic2[friend2][1]
-                    
-                    if friend1_present_num > friend2_present_num:
-                        present_count[friend1] += 1
-            elif dic1[friend1][friend2] == 0 and dic1[friend2][friend1] == 0:
-                    friend1_present_num = dic2[friend1][0] - dic2[friend1][1]
-                    friend2_present_num = dic2[friend2][0] - dic2[friend2][1]
-                    
-                    if friend1_present_num > friend2_present_num:
-                        present_count[friend1] += 1
-             
-            
+
     return max(list(present_count.values())) if list(present_count.values()) else 0
