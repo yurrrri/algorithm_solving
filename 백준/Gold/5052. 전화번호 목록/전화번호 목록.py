@@ -1,22 +1,19 @@
-from collections import defaultdict
+import sys
+input = sys.stdin.readline
 
 t = int(input())
 for _ in range(t):
-  dic = defaultdict(int)
-  words = set()
-  flag = False
-  n = int(input())
-  for _ in range(n):
-    number = input()
-    words.add(number)
-    for i in range(1, len(number)+1):
-      dic[number[:i]] += 1
-  
-  for (k, v) in dic.items():
-    if k in words and v>=2:
+    flag = True
+    n = int(input())
+    nums = []
+    for _ in range(n):
+        tmp = input().strip()
+        nums.append(tmp)
+    nums.sort()
+    for n1, n2 in zip(nums, nums[1:]):
+        if n2.startswith(n1):
+            flag = False
+    if flag == True:
+        print("YES")
+    else:
         print("NO")
-        flag = True
-        break
-
-  if not flag:
-    print("YES")
