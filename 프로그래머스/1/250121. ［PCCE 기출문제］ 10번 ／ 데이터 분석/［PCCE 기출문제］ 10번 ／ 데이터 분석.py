@@ -1,18 +1,9 @@
 def solution(data, ext, val_ext, sort_by):
     answer = []
-    
-    def extToIndex(ext):
-        if ext == "code":
-            return 0
-        elif ext == "date":
-            return 1
-        elif ext == "maximum":
-            return 2
-        else:
-            return 3
+    axis=["code", "date", "maximum", "remain"]
     
     for d in data:
-        if d[extToIndex(ext)] < val_ext:
+        if d[axis.index(ext)] < val_ext:
             answer.append(d)
         
-    return sorted(answer, key=lambda x:x[extToIndex(sort_by)])
+    return sorted(answer, key=lambda x:x[axis.index(sort_by)])
