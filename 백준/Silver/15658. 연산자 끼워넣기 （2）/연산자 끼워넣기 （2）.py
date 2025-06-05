@@ -1,11 +1,18 @@
 n = int(input())
 arr = list(map(int, input().split()))
 plus, minus, multi, divide = map(int, input().split())
-answer_lst = []
+max_ans = -1e11
+min_ans = 1e11
 
 def backtracking(_sum, p, m, mt, d, depth):
+  global max_ans
+  global min_ans
+  
   if depth == n:
-    answer_lst.append(_sum)
+    if max_ans < _sum:
+      max_ans = _sum
+    if min_ans > _sum:
+      min_ans = _sum
     return
 
   if p < plus:
@@ -18,15 +25,12 @@ def backtracking(_sum, p, m, mt, d, depth):
     backtracking(_sum * arr[depth], p, m, mt+1, d, depth+1)
 
   if d < divide:
-    if _sum < 0 and arr[depth] > 0:
-      temp = _sum * -1
-      temp //= arr[depth]
-      temp *= -1
-      backtracking(temp, p, m, mt, d+1, depth+1)
+    if _sum < 0:
+      backtracking(-(-_sum // arr[depth]), p, m, mt, d+1, depth+1)
     else:
       backtracking(_sum // arr[depth], p, m, mt, d+1, depth+1)
 
 backtracking(arr[0], 0, 0, 0, 0, 1)
 
-print(max(answer_lst))
-print(min(answer_lst))
+print(max_ans)
+print(min_ans)
