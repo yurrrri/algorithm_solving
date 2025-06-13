@@ -2,10 +2,10 @@ from collections import Counter
 
 def solution(k, tangerine):
     counter = Counter(tangerine)
-    sorted_counter = sorted(counter.items(), key=lambda x:-x[1])
+    sorted_counter = sorted(counter.values(), reverse=True)
     answer = 0
     
-    for key, value in sorted_counter:
+    for value in sorted_counter:
         if k <= 0:
             break
         k -= value
