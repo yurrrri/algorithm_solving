@@ -9,8 +9,8 @@ def solution(people, limit):
     
     while i <= j:
         if people[i] + people[j] <= limit:
-            i += 1
+            i += 1    # 무거운 사람과 가벼운 사람을 태울 수 있다면 가벼운 사람도 함께 태움
         answer += 1
-        j -= 1
+        j -= 1      # 무거운 사람은 항상 보트에 탈 수 있으므로 태움
             
     return answer
