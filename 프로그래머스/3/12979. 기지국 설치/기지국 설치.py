@@ -9,6 +9,6 @@ def solution(n, stations, w):
             idx += 1
         else:     # 닿아있지 않다면 전파 설치
             answer += 1
-            location += 2 * w + 1
+            location += 2 * w + 1  # 해당 기지국을 설치함으로써 전파가 닿지않는 범위로 이동
             
     return answer
