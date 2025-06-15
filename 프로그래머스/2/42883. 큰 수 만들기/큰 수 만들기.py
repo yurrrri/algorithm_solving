@@ -1,5 +1,4 @@
 def solution(number, k):
-    answer = ''
     stack = [number[0]]
     number = list(number)
     
