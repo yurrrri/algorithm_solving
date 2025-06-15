@@ -24,8 +24,8 @@
 #     return answer
 
 def solution(n, lost, reserve):
-    _reserve = sorted([r for r in reserve if r not in lost])
-    _lost = sorted([l for l in lost if l not in reserve])
+    _reserve = sorted(set(reserve) - set(lost))
+    _lost = sorted(set(lost) - set(reserve))
     
     for r in _reserve:
         f = r - 1
