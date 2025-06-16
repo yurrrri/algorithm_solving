@@ -1,18 +1,24 @@
 def solution(answers):
-    first_student = [1, 2, 3, 4, 5] * (len(answers)//5 + 1)
-    second_student = [2, 1, 2, 3, 2, 4, 2, 5] * (len(answers)//8 + 1)
-    third_student = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5] * (len(answers)//10 + 1)
-    student_score_list = [0] * 3
+    one = [1, 2, 3, 4, 5]
+    two = [2, 1, 2, 3, 2, 4, 2, 5]
+    three = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
     
-    answer = []
-    
-    for i, score in enumerate(answers):
-        if first_student[i] == score:
-            student_score_list[0] += 1
-        if second_student[i] == score:
-            student_score_list[1] += 1
-        if third_student[i] == score:
-            student_score_list[2] += 1
+    one_score, two_score, three_score = (0, 0, 0)
+    for i, answer in enumerate(answers):
+        j = i%len(one)
+        k = i%len(two)
+        l = i%len(three)
+        
+        if answer == one[j]:
+            one_score += 1
             
-    answer = [i+1 for i, total in enumerate(student_score_list) if total == max(student_score_list)]
+        if answer == two[k]:
+            two_score += 1
+            
+        if answer == three[l]:
+            three_score += 1
+            
+    max_score = max(one_score, two_score, three_score)
+    answer = [r[0] for r in [(1, one_score), (2, two_score), (3, three_score)] if r[1] == max_score]
+            
     return answer
