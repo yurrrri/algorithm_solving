@@ -2,8 +2,9 @@ def solution(progresses, speeds):
     answer = []
     
     while progresses:
-        for i in range(len(progresses)):
-            progresses[i] += speeds[i]
+        while progresses[0] < 100:
+            for i in range(len(progresses)):
+                progresses[i] += speeds[i]
                 
         _sum = 0
         while progresses:
@@ -13,8 +14,7 @@ def solution(progresses, speeds):
                 speeds.pop(0)
             else:
                 break
-                
-        if _sum:
-            answer.append(_sum)
+            
+        answer.append(_sum)
         
     return answer
