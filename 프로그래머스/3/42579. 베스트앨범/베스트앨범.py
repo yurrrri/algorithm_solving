@@ -11,8 +11,6 @@ def solution(genres, plays):
     sorted_play_total = sorted(play_total_dic, key=lambda x:-play_total_dic[x])
     
     for genre in sorted_play_total:
-        _sorted = sorted(genre_play_dic[genre], key=lambda x:(-x[1], x[0]))[:2]
-        for i, _ in _sorted:
-            answer.append(i)
+        answer.extend([i for i, _ in sorted(genre_play_dic[genre], key=lambda x:(-x[1], x[0]))[:2]])
 
     return answer
