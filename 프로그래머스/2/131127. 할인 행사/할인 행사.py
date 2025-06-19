@@ -3,8 +3,8 @@ from collections import Counter
 def solution(want, number, discount):
     answer = 0
     want_dic = {}
-    for i, w in enumerate(want):
-        want_dic[w] = number[i]
+    for w, n in zip(want, number):
+        want_dic[w] = n
         
     for i in range(len(discount)):
         counter = Counter(discount[i:i+10])
