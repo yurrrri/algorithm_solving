@@ -1,32 +1,35 @@
 def solution(n, wires):
+    answer = 101
     graph = [[] for _ in range(n+1)]
-    answer = 1e9
     
     for a, b in wires:
         graph[a].append(b)
-        graph[b].append(a)   # 양방향 그래프
-        
+        graph[b].append(a)
+    
     def dfs(v):
         visited[v] = True
-        count = 1
+        cnt = 1
         
         for node in graph[v]:
             if not visited[node]:
-                count += dfs(node)
+                cnt += dfs(node)
                 
-        return count
+        return cnt
                 
     for a, b in wires:
         graph[a].remove(b)
         graph[b].remove(a)
-        
+        cnt_a = 0
         visited = [False] * (n+1)
-        cnt_a = dfs(a)
-        cnt_b = n - cnt_a
         
+        for i in range(1, n+1):
+            if graph[i] and not visited[i]:
+                cnt_a = dfs(i)
+                
+        cnt_b = n - cnt_a
         answer = min(answer, abs(cnt_b - cnt_a))
         
         graph[a].append(b)
         graph[b].append(a)
-    
+        
     return answer
