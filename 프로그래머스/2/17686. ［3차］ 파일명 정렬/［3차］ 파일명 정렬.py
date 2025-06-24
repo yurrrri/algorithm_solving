@@ -2,7 +2,7 @@ from functools import cmp_to_key
 
 def compare(a, b):
     
-    axis = 0
+    axis = 0    # 기준 1, 2에서 모두 비교할 수 없을 경우 원래 입력에 주어진 순서를 유지하므로, 초기값을 0으로 세팅한다.
     
     def extract_from_file(file):
 
@@ -10,12 +10,15 @@ def compare(a, b):
         number_start_idx = 0
 
         for idx, f in enumerate(file):
-            if number_start_idx == 0 and f.isdigit():
+            if f.isdigit():
                 head = file[:idx]
                 number_start_idx = idx
-            elif number_start_idx != 0 and not f.isdigit():
-                number = file[number_start_idx:idx]
-                tail = file[idx:]
+                break
+                
+        for i in range(number_start_idx, len(file)):
+            if not file[i].isdigit():
+                number = file[number_start_idx:i]
+                tail = file[i:]
                 break
                 
         if len(number) == 0:
@@ -30,7 +33,7 @@ def compare(a, b):
         axis = -1
     elif a_head.lower() > b_head.lower():
         axis = 1
-    else:
+    else:     # HEAD 부분이 대소문자 차이 외에는 같을 경우, NUMBER의 숫자 순으로 정렬한다.
         if int(a_number) < int(b_number):
             axis = -1
         elif int(a_number) > int(b_number):
