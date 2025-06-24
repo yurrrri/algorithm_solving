@@ -28,7 +28,7 @@ def solution(m, musicinfos):
         start, end, title, info = music.split(",")
         duration = calculate_minute(start, end)
         info = change(info)
-        played = (info * (duration // len(info))) + info[:duration % len(info)]
+        played = info * (duration // len(info)) + info[:duration % len(info)]
         if m in played:
             answers.append((title, duration))
             
