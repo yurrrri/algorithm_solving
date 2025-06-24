@@ -1,7 +1,7 @@
 def solution(m, musicinfos):
     
     def change(x):		# #음 치환
-        exc = {'C#':'1','D#':'2', 'F#':'3', 'G#':'4', 'A#':'5', 'B#': '6'}
+        exc = {'C#':'c','D#':'d', 'F#':'f', 'G#':'g', 'A#':'a', 'B#': 'b'}
         for k, v in exc.items():
             x = x.replace(k, v)
         return x
