@@ -8,13 +8,13 @@ def solution(n, info):             # info: 어피치가 맞힌 화살 리스트,
     def calculate_score(combi):
         score1, score2 = 0, 0
         
-        for i in range(1, 11):
-            if not info[10-i] and not combi[i]:
+        for i in range(11):
+            if not info[10-i] and not combi[i]:   # 어피치와 라이언 모두 0점을 맞혔다면 아무도 점수를 가져가지 않음
                 continue
                 
             if info[10-i] < combi[i]:
                 score2 += i
-            else:
+            else:                      # 어피치가 라이언보다 점수가 크거나 같으면 어피치가 가져감
                 score1 += i
                 
         return score1, score2
