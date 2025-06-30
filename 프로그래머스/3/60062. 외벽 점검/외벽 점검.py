@@ -1,26 +1,32 @@
-from itertools import permutations
-
+# 파이썬
 def solution(n, weak, dist):
-    answer = 9
-    _len = len(weak)
-    
-    for i in range(_len):
-        weak += [weak[i] + n]
-        
-    
-    # 2. 모든 취약점 위치를 시작점으로 하여 각 친구가 취약 지점들을 커버할 수 있는지 확인함
-    for i in range(_len):
-        for friend in permutations(dist, len(dist)):
-            cnt = 1
-            pos = weak[i] + friend[cnt - 1]    # 첫번째 친구가 i 위치의 취약점에서 이동할 수 있는 거리
-            for j in range(i, i + _len):
-                if pos < weak[j]:       # i 이후의 각 취약점을 현재 친구가 커버할 수 없으면, 친구를 추가 투입해야함
-                    cnt += 1
-                    if cnt > len(dist):
-                        break
-                        
-                    pos = weak[j] + friend[cnt-1]
-                    
-            answer = min(answer, cnt)
-    
-    return answer if answer <= len(dist) else -1
+
+    W, F = len(weak), len(dist)
+    repair_lst = [()]  # 현재까지 고칠 수 있는 취약점들 저장 (1,2,3)
+    count = 0  # 투입친구 수
+    dist.sort(reverse=True) # 움직일 수 있는 거리가 큰 친구 순서대로
+
+    # 고칠 수 있는 것들 리스트 작성
+    for can_move in dist:
+        repairs = []  # 친구 별 고칠 수 있는 취약점들 저장
+        count += 1
+
+        # 수리 가능한 지점 찾기
+        for i, wp in enumerate(weak):
+            start = wp  # 각 위크포인트부터 시작
+            ends = weak[i:] + [n+w for w in weak[:i]]  # 시작점 기준 끝 포인트 값 저장
+            can = [end % n for end in ends if end -
+                   start <= can_move]  # 가능한 지점 저장
+            repairs.append(set(can))
+
+        # 수리 가능한 경우 탐색
+        cand = set()
+        for r in repairs:  # 새친구의 수리가능 지점
+            for x in repair_lst:  # 기존 수리가능 지점
+                new = r | set(x)  # 새로운 수리가능 지점
+                if len(new) == W:  # 모두 수리가능 한 경우 친구 수 리턴
+                    return count
+                cand.add(tuple(new))
+        repair_lst = cand
+
+    return -1
