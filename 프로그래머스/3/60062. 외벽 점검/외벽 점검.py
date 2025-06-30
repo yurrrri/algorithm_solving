@@ -1,7 +1,7 @@
 # 파이썬
 def solution(n, weak, dist):
 
-    W, F = len(weak), len(dist)
+    W = len(weak)
     repair_lst = [()]  # 현재까지 고칠 수 있는 취약점들 저장 (1,2,3)
     count = 0  # 투입친구 수
     dist.sort(reverse=True) # 움직일 수 있는 거리가 큰 친구 순서대로
@@ -12,12 +12,14 @@ def solution(n, weak, dist):
         count += 1
 
         # 수리 가능한 지점 찾기
-        for i, wp in enumerate(weak):
-            start = wp  # 각 위크포인트부터 시작
-            ends = weak[i:] + [n+w for w in weak[:i]]  # 시작점 기준 끝 포인트 값 저장
-            can = [end % n for end in ends if end -
-                   start <= can_move]  # 가능한 지점 저장
-            repairs.append(set(can))
+        for i, start in enumerate(weak):
+            covered = set()
+            for w in weak:
+                distance = (w - start) % n
+                if distance <= can_move:
+                    covered.add(w)
+            repairs.append(covered)
+
 
         # 수리 가능한 경우 탐색
         cand = set()
