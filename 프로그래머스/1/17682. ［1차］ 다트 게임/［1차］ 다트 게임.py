@@ -1,6 +1,8 @@
 def solution(dartResult):
     answer = 0
     stack = []
+    dartResult = dartResult.replace('10', 'k')
+    dartResult = ['10' if r == 'k' else r for r in dartResult]
         
     for dart in dartResult:
         if dart == "S":
@@ -10,16 +12,10 @@ def solution(dartResult):
         elif dart == "T":
             stack[-1] = stack[-1] ** 3
         elif dart == "*":
-            stack[-1] *= 2
-            if len(stack) >= 2:
-                stack[-2] *= 2
+            stack[-2:] = [r * 2 for r in stack[-2:]]
         elif dart == "#":
             stack[-1] *= (-1)
         else:
-            if stack and stack[-1] == 1 and dart == "0":
-                stack.pop()
-                stack.append(10)
-            else:
-                stack.append(int(dart))
+            stack.append(int(dart))
         
     return sum(stack)
