@@ -8,7 +8,9 @@ def solution(user_id, banned_id):
             return False
         
         for u, s in zip(_id, standard):
-            if u != "*" and s != "*" and u != s:  # *가 아닌데 다르면 다른거임
+            if s == "*":
+                continue
+            if u != s:
                 return False
             
         return True
