@@ -17,11 +17,11 @@ def solution(bandage, health, attacks):
         contentious_time += 1
         current_health += x
         
-        if contentious_time == t:
+        if contentious_time == t:   # 연속 성공시, y만큼 추가 회복 및 연속 성공 초기화
             current_health += y
             contentious_time = 0
             
-        if current_health >= health:
+        if current_health >= health:       # 현재 체력이 최대 체력보다 커지는것은 불가능하므로, 최대 체력으로 만들어줌
             current_health = health
     
     return current_health
