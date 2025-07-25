@@ -1,19 +1,21 @@
 import sys
-sys.setrecursionlimit(10**6)
+sys.setrecursionlimit(10**6)    # 재귀 깊이를 늘려줘야 런타임 에러가 안뜸
 
 def solution(land):
     answer = 0
     n = len(land)   # n: 세로길이 - x
     m = len(land[0])  # m: 가로길이 - y
     visited = [[False] * m for _ in range(n)]
+    cols = [0] * m
     dx = [-1, 1, 0, 0]
     dy = [0, 0, -1, 1]
-    num = 0   # 덩어리를 구분짓기 위한 숫자
-    land_num = [[0] * m for _ in range(n)]
     
     def dfs(x, y):
+        nonlocal size
+        
         visited[x][y] = True
-        temp.append((x, y))
+        size += 1
+        temp.add(y)
         
         for i in range(4):
             nx = x + dx[i]
@@ -25,24 +27,10 @@ def solution(land):
     for i in range(n):
         for j in range(m):
             if land[i][j] == 1 and not visited[i][j]:
-                num += 1
-                temp = []
+                temp = set()
+                size = 0
                 dfs(i, j)
-                size = len(temp)
-                for x, y in temp:
-                    land[x][y] = size
-                    land_num[x][y] = num
-                                        
-    for i in range(m):
-        oil_set = set()
-        for j in range(n):
-            if land[j][i] != 0:
-                oil_set.add((land_num[j][i], land[j][i]))
-                
-        _sum = 0
-        for num, amount in oil_set:
-            _sum += amount
-                
-        answer = max(answer, _sum)
+                for y in temp:
+                    cols[y] += size                
     
-    return answer
+    return max(cols)
