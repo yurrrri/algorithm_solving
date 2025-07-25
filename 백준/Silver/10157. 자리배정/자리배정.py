@@ -7,7 +7,7 @@ if k > c*r:
   
 dx = [0, 1, 0, -1]
 dy = [1, 0, -1, 0]
-visited = [[False] * c for _ in range(r)]
+visited = [[False] * r for _ in range(c)]
 
 temp = 1
 x, y = 0, 0
@@ -18,12 +18,12 @@ while True:
     print(x+1, y+1)
     break
 
-  visited[y][x] = True
+  visited[x][y] = True
   nx = x + dx[d]
   ny = y + dy[d]
 
   if 0<=nx<c and 0<=ny<r:
-    if not visited[ny][nx]:
+    if not visited[nx][ny]:
       x = nx
       y = ny
       temp += 1
