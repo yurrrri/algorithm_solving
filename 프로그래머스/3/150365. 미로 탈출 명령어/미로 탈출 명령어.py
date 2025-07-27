@@ -8,7 +8,7 @@ def solution(n, m, x, y, r, c, k):
     def dfs(pos_x, pos_y, route):
         nonlocal answer
         
-        if len(route) == k and pos_x == r-1 and pos_y == c-1:
+        if len(route) == k and pos_x == r and pos_y == c:
             answer = route
             return
         
@@ -16,7 +16,7 @@ def solution(n, m, x, y, r, c, k):
             return
 
         remain = k - len(route)
-        d = abs(pos_x - (r-1)) + abs(pos_y - (c-1))
+        d = abs(pos_x - r) + abs(pos_y - c)
         if d > remain or (remain - d) % 2 != 0:
             return
         
@@ -24,10 +24,10 @@ def solution(n, m, x, y, r, c, k):
             nx = pos_x + dic[i][0]
             ny = pos_y + dic[i][1]
             
-            if 0<=nx<n and 0<=ny<m:
+            if 1<=nx<=n and 1<=ny<=m:
                 dfs(nx, ny, route + i)
                 
-    dfs(x-1, y-1, "")
+    dfs(x, y, "")
     
     if not answer:
         return "impossible"
