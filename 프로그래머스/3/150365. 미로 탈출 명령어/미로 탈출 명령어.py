@@ -15,12 +15,12 @@ def solution(n, m, x, y, r, c, k):
         if answer:
             return
 
-        remain = k - len(route)
-        d = abs(pos_x - r) + abs(pos_y - c)
+        remain = k - len(route)    # 남은 이동횟수
+        d = abs(pos_x - r) + abs(pos_y - c)   # 현재 위치에서 목표 지점까지의 거리
         if d > remain or (remain - d) % 2 != 0:
             return
         
-        for i in ["d", "l", "r", "u"]:
+        for i in ["d", "l", "r", "u"]:   # 사전 순으로 빠른 경로를 만들기 위해 d, l, r, u 순서대로 만듦
             nx = pos_x + dic[i][0]
             ny = pos_y + dic[i][1]
             
