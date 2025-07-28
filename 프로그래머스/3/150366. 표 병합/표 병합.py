@@ -10,7 +10,7 @@ def solution(commands):
                 r, c, value = int(command[1]), int(command[2]), command[3]
                 x, y = merged[r][c]   # 병합된 좌표값 얻어오기
                 pyo[x][y] = value
-            else:
+            else:       # value1을 값으로 가지고 있는 모든 셀들의 값을 value2로 바꿔줌
                 value1, value2 = command[1], command[2]
                 for i in range(1, 51):
                     for j in range(1, 51):
@@ -19,20 +19,20 @@ def solution(commands):
                 
         elif command[0] == "MERGE":
             r1, c1, r2, c2 = int(command[1]), int(command[2]), int(command[3]), int(command[4])
-            x1, y1 = merged[r1][c1]
-            x2, y2 = merged[r2][c2]
-            if pyo[x1][y1] == "EMPTY":
+            x1, y1 = merged[r1][c1]    # 병합된 r1, c1 좌표 얻어오기
+            x2, y2 = merged[r2][c2]    # 병합된 x2, y2 좌표 얻어오기
+            if pyo[x1][y1] == "EMPTY":  # pyo[x1][y1] 가 빈값이라면 x2, y2 를 기준으로 해서 병합해야한다.
                 value = pyo[x2][y2]
                 
                 for i in range(1, 51):
                     for j in range(1, 51):
-                        if merged[i][j] == (x1, y1):
+                        if merged[i][j] == (x1, y1):   # x2, y2로 병합하기
                             merged[i][j] = (x2, y2)
                             pyo[i][j] = value
                 pyo[x1][y1] = value
                             
-            else:
-                value = pyo[x2][y2]
+            else:     # pyo[x1][y1] 값이 있다면, pyo[x2][y2] 값이 있는지와 무관하게 
+                value = pyo[x1][y1]
                 for i in range(1, 51):
                     for j in range(1, 51):
                         if merged[i][j] == (x2, y2):
