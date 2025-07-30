@@ -1,6 +1,7 @@
 def solution(diffs, times, limit):
     start = 1
     end = max(diffs)
+    answer = 0
     
     def calculate(level):
         sum_time = 0
@@ -11,17 +12,15 @@ def solution(diffs, times, limit):
             else:
                 sum_time += (diff - level) * (times[i-1] + time) + time
                 
-        if sum_time <= limit:
-            return True
-        else:
-            return False
+        return sum_time
     
     while start <= end:
         mid = (start + end) // 2
         
-        if calculate(mid):
+        if calculate(mid) <= limit:
             end = mid - 1
+            answer = mid
         else:
             start = mid + 1
 
-    return start
+    return answer
