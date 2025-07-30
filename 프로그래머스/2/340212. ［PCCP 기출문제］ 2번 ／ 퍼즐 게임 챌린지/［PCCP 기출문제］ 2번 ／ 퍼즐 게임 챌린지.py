@@ -3,7 +3,7 @@ def solution(diffs, times, limit):
     end = max(diffs)
     answer = 0
     
-    def calculate(level):
+    def calculate(level):   # level 별로 문제들을 푸는데 드는 총 소요 시간을 계산하는 함수
         sum_time = 0
         
         for i, (diff, time) in enumerate(zip(diffs, times)):
