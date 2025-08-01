@@ -1,33 +1,32 @@
-import sys
-sys.setrecursionlimit(10**8)
-
 n, m, k = map(int, input().split())
 money = [0] + list(map(int, input().split()))
-graph = [[] for _ in range(n+1)]
+answer = 0
+parent = [i for i in range(n+1)]
+
+def find(x):
+  if parent[x] == x:
+    return x
+
+  parent[x] = find(parent[x])
+  return parent[x]
+
+def union(x, y):
+  root_x = find(x)
+  root_y = find(y)
+  
+  if money[root_x] > money[root_y]:
+    parent[root_x] = root_y
+  else:
+    parent[root_y] = root_x
+
 for _ in range(m):
   v, w = map(int, input().split())
-  graph[v].append(w)
-  graph[w].append(v)
+  union(v, w)
 
-def dfs(node):
-  global temp
-  
-  visited[node] = True
-  temp = min(temp, money[node])
-
-  for i in graph[node]:
-    if not visited[i]:
-      dfs(i)
-
-answer = 0
-
-visited = [False] * (n+1)
 for i in range(1, n+1):
-  if not visited[i]:
-    temp = 1e9
-    dfs(i)
-    answer += temp
-
+    if i == find(i):
+        answer += money[i]
+    
 if answer <= k:
   print(answer)
 else:
