@@ -17,9 +17,9 @@ def solution(play_time, adv_time, logs):
     play_time = transform_time(play_time)
     adv_time = transform_time(adv_time)
     
-    timeline = [0] * (play_time + 2)  # 마지막 범위 처리를 위해 +2
+    timeline = [0] * (play_time + 2)   # 재생시간 마지막까지 처리 위해 인덱스 범위를 늘림
 
-    # 누적 시청자 수 기록
+    # logs의 길이는 최대 360_000이기 때문에 O(n)에 해소하는 알고리즘을 적용해야함
     for log in logs:
         start, end = log.split("-")
         start_sec = transform_time(start)
@@ -39,7 +39,7 @@ def solution(play_time, adv_time, logs):
     answer = 0
     
     for t in range(play_time - adv_time + 1):
-        prefix_sum = timeline[t + adv_time - 1] - timeline[t - 1]
+        prefix_sum = timeline[t + adv_time-1] - timeline[t-1]
         if prefix_sum > max_time:
             max_time = prefix_sum
             answer = t
