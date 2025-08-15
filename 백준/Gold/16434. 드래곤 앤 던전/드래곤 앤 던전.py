@@ -1,3 +1,5 @@
+import math
+
 n, p = map(int, input().split())  # 방의 개수, 초기 공격력
 arr = []
 for _ in range(n):
@@ -15,10 +17,7 @@ def can_clear(atk, maxhp):
       current_hp += h
       current_hp = min(current_hp, maxhp)   # 용사 생명력이 최대 생명력(maxhp)를 넘으면 maxhp
     else:
-      if h%atk==0:
-        current_hp -= ((h//atk)-1)*a
-      else:
-        current_hp -= (h//atk)*a
+      current_hp -= (math.ceil(h/atk)-1) * a
   
       if current_hp <= 0:
         return False
