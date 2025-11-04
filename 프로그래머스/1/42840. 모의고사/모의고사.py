@@ -1,24 +1,21 @@
 def solution(answers):
-    one = [1, 2, 3, 4, 5]
-    two = [2, 1, 2, 3, 2, 4, 2, 5]
-    three = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
-    
+    answer = []
     scores = [0] * 3
-    for i, answer in enumerate(answers):
-        j = i%len(one)
-        k = i%len(two)
-        l = i%len(three)
-        
-        if answer == one[j]:
+    first = [1, 2, 3, 4, 5]
+    second = [2, 1, 2, 3, 2, 4, 2, 5]
+    third = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
+    
+    for i in range(len(answers)):
+        if first[i%5] == answers[i]:
             scores[0] += 1
-            
-        if answer == two[k]:
+        if second[i%8] == answers[i]:
             scores[1] += 1
-            
-        if answer == three[l]:
+        if third[i%10] == answers[i]:
             scores[2] += 1
             
-    max_score = max(scores)
-    answer = [i+1 for i, score in enumerate(scores) if score == max_score]
-            
+    maxscore = max(scores)
+    for i, e in enumerate(scores):
+        if e == maxscore:
+            answer.append(i+1)
+    
     return answer
