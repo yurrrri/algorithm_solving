@@ -3,29 +3,19 @@ from collections import Counter
 
 def solution(orders, course):
     answer = []
-    orders = [sorted(i) for i in orders]
-    menus = []
-    combi_max = {}
+    orders = [sorted(i) for i in orders]   # 조합 내부의 알파벳도 정렬되어있어야하므로 먼저 정렬한다.
+    
     for c in course:
-        combi_max[c] = 0
-    
-    for order in orders:
-        for number in course:
-            combi = combinations(order, number)
-            for c in combi:
-                menus.append("".join(c))
+        menus = []
+        for order in orders:
+            combi = combinations(order, c)
+            for comb in combi:
+                menus.append("".join(comb))
+            
+        counter = Counter(menus).most_common()
+        
+        for k, v in counter:
+            if v >= 2 and v == counter[0][1]:
+                answer.append(k)
                 
-    counter = Counter(menus)
-    for menu, count in counter.items():
-        for c in course:
-            if len(menu) == c:
-                combi_max[c] = max(combi_max[c], count)
-                
-    for menu, count in counter.items():
-        for c in course:
-            if len(menu) == c and count >= 2 and count == combi_max[c]:
-                answer.append(menu)
-    
-    answer.sort()
-    
-    return answer
+    return sorted(answer)
