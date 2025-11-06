@@ -1,26 +1,31 @@
 from itertools import combinations
 from collections import Counter
 
-
 def solution(orders, course):
     answer = []
-    combi = []
+    orders = [sorted(i) for i in orders]
+    menus = []
+    combi_max = {}
+    for c in course:
+        combi_max[c] = 0
     
     for order in orders:
-        order_to_list = sorted(list(order))
-        for c in course:
-            combi.extend(combinations(order_to_list, c))
-            
-    counter = Counter(combi)
-    
-    for c in course:
-        max_num = 0
-        for k, v in counter.items():
-            if len(k) == c and v >= 2:
-                max_num = max(max_num, v)
+        for number in course:
+            combi = combinations(order, number)
+            for c in combi:
+                menus.append("".join(c))
                 
-        for k, v in counter.items():
-            if len(k) == c and v == max_num:
-                answer.append("".join(k))
-        
-    return sorted(answer)
+    counter = Counter(menus)
+    for menu, count in counter.items():
+        for c in course:
+            if len(menu) == c:
+                combi_max[c] = max(combi_max[c], count)
+                
+    for menu, count in counter.items():
+        for c in course:
+            if len(menu) == c and count >= 2 and count == combi_max[c]:
+                answer.append(menu)
+    
+    answer.sort()
+    
+    return answer
