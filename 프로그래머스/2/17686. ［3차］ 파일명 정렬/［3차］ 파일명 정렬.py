@@ -23,7 +23,8 @@ def compare(a, b):
     a_head, a_number, a_tail = extract_from_file(a)
     b_head, b_number, b_tail = extract_from_file(b)
     
-    if a_head.lower() < b_head.lower():
+    if a_head.lower() < b_head.lower():    # 문자열 비교시 대소문자 구분을하지 않으므로 둘다 lower 혹은 upper 처리하여 비교한다.
+        # cmp_to_key의 함수에서 음수는 a가 b보다 앞에 오는 것이고, 양수는 a가 b보다 뒤에 오는것이다.
         axis = -1
     elif a_head.lower() > b_head.lower():
         axis = 1
@@ -32,7 +33,7 @@ def compare(a, b):
             axis = -1
         elif int(a_number) > int(b_number):
             axis = 1
-        else:
+        else:   # HEAD와 NUMBER도 같을 경우, 원래 입력에 주어진 순서를 유지한다. (0 반환)
             axis = 0
             
     return axis
