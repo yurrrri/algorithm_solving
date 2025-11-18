@@ -34,6 +34,7 @@ def solution(board):
             new_cost = cost + calculate_cost(prev_dir, i)
             
             if is_valid(nx, ny) and visited[nx][ny][i] > new_cost:    # 방문한 적이 없거나(INF), new_cost가 기존 비용보다 더 작으면 이걸로 갱신
+                # 기존 비용(visited[nx][ny][i])과 비교하는 이유는 방향에 따라 비용이 달라지기 때문
                 visited[nx][ny][i] = new_cost
                 q.append((nx, ny, i, new_cost))
     
