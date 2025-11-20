@@ -1,5 +1,4 @@
-import sys
-sys.setrecursionlimit(10**8)
+from collections import deque
 
 n, m, k = map(int, input().split())
 board = [[0] * (m+1) for _ in range(n+1)]
@@ -11,16 +10,25 @@ for _ in range(k):
   board[r][c] = 1
 answer = 0
 
+# 스택을 활용한 깊이우선 탐색
 def dfs(x, y):
-  cnt = 1
-  visited[x][y] = True
+  cnt = 0
+  stack = [(x, y)]
 
-  for i in range(4):
-    nx = x + dx[i]
-    ny = y + dy[i]
+  while stack:
+    current_x, current_y = stack.pop()
 
-    if 1<=nx<=n and 1<=ny<=m and board[nx][ny] and not visited[nx][ny]:
-      cnt += dfs(nx, ny)
+    if visited[current_x][current_y]:
+        continue
+    visited[current_x][current_y] = True
+    cnt += 1
+
+    for i in range(4):
+      nx = current_x + dx[i]
+      ny = current_y + dy[i]
+
+      if 1<=nx<=n and 1<=ny<=m and board[nx][ny] and not visited[nx][ny]:
+        stack.append((nx, ny))
 
   return cnt
 
