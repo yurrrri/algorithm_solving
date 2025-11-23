@@ -1,4 +1,7 @@
-example = input()
+import sys
+input = sys.stdin.readline
+
+example = input().rstrip()
 n = len(example)
 arr = [[0] * 26 for _ in range(n)]
 arr[0][ord(example[0]) - ord('a')] = 1
