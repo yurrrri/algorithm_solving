@@ -22,8 +22,9 @@ def bfs():
 
   while q:
     visited = [[False] * 8 for _ in range(8)]
+    n = len(q)
     
-    for _ in range(len(q)):
+    for _ in range(n):
       x, y = q.popleft()
       if board[x][y] == '#':
           continue
@@ -31,12 +32,12 @@ def bfs():
         return 1
 
       for i in range(9):
-          nx = x + dx[i]
-          ny = y + dy[i]
+        nx = x + dx[i]
+        ny = y + dy[i]
 
-          if 0<=nx<8 and 0<=ny<8 and not visited[nx][ny] and board[nx][ny] == '.':
-            q.append((nx, ny))
-            visited[nx][ny] = True
+        if 0<=nx<8 and 0<=ny<8 and not visited[nx][ny] and board[nx][ny] == '.':
+          q.append((nx, ny))
+          visited[nx][ny] = True
 
     board[:] = move_wall(board)
 
