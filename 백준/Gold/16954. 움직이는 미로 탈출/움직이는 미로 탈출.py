@@ -3,18 +3,11 @@ from collections import deque
 dx = [-1, 1, 0, 0, -1, -1, 1, 1, 0]
 dy = [0, 0, -1, 1, -1, 1, -1, 1, 0]  # 인접한 한칸 혹은 대각선 방향, 현재 위치에 서있을 수 있음
 
-# board에서 벽 아래로 이동하는 함수 하나
-# DFS 혹은 BFS -> 이때 벽이 캐릭터가 있는 칸으로 이동하면 더 이상 캐릭터는 이동할 수 없음
-
 board = []
-bricks = []
-for i in range(8):
-  temp = list(input())
-  board.append(temp)
-  for j in range(8):
-    if board[i][j] == "#":
-      bricks.append((i, j))
+for _ in range(8):
+  board.append(list(input()))
 
+# board에서 벽 아래로 이동하는 함수 하나 필요
 def move_wall(board):
     new = [['.'] * 8 for _ in range(8)]
     for i in range(8):
@@ -41,10 +34,9 @@ def bfs():
           nx = x + dx[i]
           ny = y + dy[i]
 
-          if 0<=nx<8 and 0<=ny<8 and not visited[nx][ny]:
-              if board[nx][ny] == '.':
-                  q.append((nx, ny))
-                  visited[nx][ny] = True
+          if 0<=nx<8 and 0<=ny<8 and not visited[nx][ny] and board[nx][ny] == '.':
+            q.append((nx, ny))
+            visited[nx][ny] = True
 
     board[:] = move_wall(board)
 
