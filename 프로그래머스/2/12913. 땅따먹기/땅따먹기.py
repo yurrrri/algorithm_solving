@@ -1,12 +1,13 @@
 def solution(land):
+    answer = 0
     n = len(land)
-    dp = [[0] * 4 for _ in range(n)]
-    dp[0] = land[0]
     
     for i in range(1, n):
         for j in range(4):
+            temp = 0
             for k in range(4):
-                if j == k: continue
-                dp[i][j] = max(dp[i][j], land[i][j] + dp[i-1][k])
+                if j != k:
+                    temp = max(land[i-1][k], temp)
+            land[i][j] += temp
 
-    return max(dp[-1])
+    return max(land[-1])
