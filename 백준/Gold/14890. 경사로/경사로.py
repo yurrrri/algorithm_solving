@@ -10,6 +10,8 @@ answer = 0
 # 낮은 지점의 칸의 높이가 모두 같지 않거나, L개 연속 X -> False
 def can_install(road):
   visited = [False] * n   # 경사로 설치 여부를 판단하는 배열
+  if len(set(road)) == 1:  # 모두 같은 숫자로 이루어져있는 경우, 길이므로 바로 return True
+    return True
 
   for i in range(1, n):
     diff = road[i-1] - road[i]
