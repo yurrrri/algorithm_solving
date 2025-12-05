@@ -10,7 +10,8 @@ for _ in range(n):
   board.append(list(map(int, input())))
 
 def bfs():
-  visited = [[-1] * n for _ in range(n)]
+  visited = [[-1] * n for _ in range(n)]    
+  # 방문 여부와 검정색을 흰색으로 바꾼 갯수를 저장할 nxn 배열
   q = deque([(0, 0)])
   visited[0][0] = 0
 
@@ -26,10 +27,10 @@ def bfs():
       ny = y + dy[i]
 
       if 0<=nx<n and 0<=ny<n and visited[nx][ny] == -1:
-        if board[nx][ny] == 1:
+        if board[nx][ny] == 1:   # 흰색 방인 경우 가중치 0 -> appendleft
             q.appendleft((nx, ny))
             visited[nx][ny] = visited[x][y]
-        else:
+        else:    # 검은색 방인 경우 부숴야 하니까 가중치 1 -> append, 흰색으로 바꾸는 경우의 수 갱신
             q.append((nx, ny))
             visited[nx][ny] = visited[x][y] + 1
 
