@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 t = int(input())
 for _ in range(t):
   # 팀의 갯수, 문제 갯수, 팀의 id, 로그의 갯수
